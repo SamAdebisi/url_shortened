@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 
+from dotenv import load_dotenv
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,12 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "Pik1N5MTugiOk-oU4iPUrnnc6Sqi-TD8win2AV55KN0"
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG")
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [os.getenv("ALLOWED_HOSTS")]
 
 
 # Application definition
@@ -102,9 +105,9 @@ DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
 #         'NAME': 'postgres',
-#         'USER': 'postgres',
-#         'PASSWORD': 'postgres',
-#         'HOST': 'db',
+#         'USER': os.getenv('USER'),
+#         'PASSWORD': os.getenv("PASSWORD"),
+#         'HOST': os.getenv('HOST'),
 #         'PORT': 5432
 #     }
 # }
@@ -174,12 +177,14 @@ REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
+ACCOUNT_EMAIL_VERIFICATION = "none"
+
 if not DEBUG:
     EMAIL_BACKENDS = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST = 'taiste.marketbow.tech'
-    EMAIL_HOST_USER = 'support@taiste.marketbow.tech'
-    EMAIL_HOST_PASSWORD = '^AnRW,6z[eSE'
-    EMAIL_PORT = 465
+    EMAIL_HOST = os.getenv('EMAIL_HOST')
+    EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+    EMAIL_PORT = os.getenv('EMAIL_PORT')
     EMAIL_USE_TLS = True
 else:
     EMAIL_BACKENDS = 'django.core.mail.backends.console.EmailBackend'
@@ -188,16 +193,6 @@ else:
 #     EMAIL_BACKENDS = 'django.core.mail.backends.smtp.EmailBackend'
 # else:
 #     EMAIL_BACKENDS = 'django.core.mail.backends.console.EmailBackend'
-
-# EMAIL_HOST = "taiste.marketbow.tech"
-# EMAIL_HOST_USER = "support@taiste.marketbow.tech"
-# EMAIL_HOST_PASSWORD = "^AnRW,6z[eSE"
-# DEFAULT_FROM_EMAIL = "support@taiste.marketbow.tech"
-# SERVER_EMAIL = "support@taiste.marketbow.tech"
-# EMAIL_PORT = 465
-# EMAIL_USE_TLS = True
-# EMAIL_USE_SSL = False
-# EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',

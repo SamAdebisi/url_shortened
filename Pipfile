@@ -11,6 +11,7 @@ redis = "*"
 django-allauth = "*"
 dj-rest-auth = "*"
 drf-spectacular = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
